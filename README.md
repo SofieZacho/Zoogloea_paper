@@ -4,7 +4,7 @@
 
 **Authors**: Sofie Zacho Vestergaard, Lei Liu, Morten Kam Dahl Dueholm, Per Halkjær Nielsen
 
-Center for Microbial Communities, Department of Chemistry and Bioscience, Aalborg University, Aalborg, Denmark.
+**Affiliation**: Center for Microbial Communities, Department of Chemistry and Bioscience, Aalborg University, Aalborg, Denmark.
 
 
 ## Intro to study
