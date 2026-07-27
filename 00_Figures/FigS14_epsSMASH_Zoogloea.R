@@ -5,16 +5,18 @@ library(ggtree)
 
 
 # data paths
-zoogloea <- read_tsv('/home/bio.aau.dk/zs85xk/projects/epsSMASH/epsSMASH_analyses/Zooglan_Sofie/region_counts.tsv', skip = 1)
+# zoogloea <- read_tsv('/home/bio.aau.dk/zs85xk/projects/epsSMASH/epsSMASH_analyses/Zooglan_Sofie/region_counts.tsv', skip = 1)
+zoogloea <- read_tsv('/home/bio.aau.dk/kl42gg/projects/rethink/zoogloea_paper/data/generated/epsSMAH/260724_Zoogloea_epsSMASH/region_counts.tsv', skip = 1)
+
 zoogloea$record <- str_remove_all(zoogloea$record, "_ASM.*|_SRR.*|_TT.*|\\.fa")
 
 
-# #hits$fasta <- str_remove_all(hits$fasta, "_TT.*")
-# rethink <- read_tsv('/home/bio.aau.dk/zs85xk/projects/epsSMASH/epsSMASH_analyses/REThiNk_catalogue/data/epsSMASH_results/region_counts.tsv', skip = 1)
-# rethink$record <- gsub('.gbff','',rethink$record)
-
-hit.genomes <- read_tsv('~/projects/rethink/zoogloea_paper/data/generated/EPS_gene_cluster_search/HQ_genomes/AS_MAGs/250224_An/hit_genomes.txt',
-                        col_names = 'genome')
+# # #hits$fasta <- str_remove_all(hits$fasta, "_TT.*")
+# # rethink <- read_tsv('/home/bio.aau.dk/zs85xk/projects/epsSMASH/epsSMASH_analyses/REThiNk_catalogue/data/epsSMASH_results/region_counts.tsv', skip = 1)
+# # rethink$record <- gsub('.gbff','',rethink$record)
+# 
+# hit.genomes <- read_tsv('~/projects/rethink/zoogloea_paper/data/generated/EPS_gene_cluster_search/HQ_genomes/AS_MAGs/250224_An/hit_genomes.txt',
+#                         col_names = 'genome')
 
 
 # read trees
@@ -42,17 +44,17 @@ meta.zoogloea <- meta %>% left_join( ., propnames, by = 'genome')
 
 
 
-
-
-
-# filter to relevsnt genomes
-rethink.hit.genomes <- rethink %>% 
-  filter(record %in% hit.genomes$genome)
-
-meta <- read_tsv('/projects/PHN/MiDAS/04-Analysis/Status-analysis/103-samples/100-add_checkm1/03-MAGs.final-version/000-MAGs-metadata/MiDAS-22277.hqMAGs.metadata.tsv')%>%
-  separate(tax_gtdb.r220, into = c('domain', 'phylum', 'class', 'order', 'family', 'genus', 'species'), sep = ';')
 # 
-# # remove columns with no hits (meaning column sum is 0) - only for numeric columns
+# 
+# 
+# # filter to relevsnt genomes
+# rethink.hit.genomes <- rethink %>% 
+#   filter(record %in% hit.genomes$genome)
+# 
+# meta <- read_tsv('/projects/PHN/MiDAS/04-Analysis/Status-analysis/103-samples/100-add_checkm1/03-MAGs.final-version/000-MAGs-metadata/MiDAS-22277.hqMAGs.metadata.tsv')%>%
+#   separate(tax_gtdb.r220, into = c('domain', 'phylum', 'class', 'order', 'family', 'genus', 'species'), sep = ';')
+# # 
+# # # remove columns with no hits (meaning column sum is 0) - only for numeric columns
 # rethink.hit.genomes.filt <- rethink.hit.genomes %>% 
 #   select(where(~ !is.numeric(.) || (is.numeric(.) && sum(.) > 0))) %>% 
 #   select(#-contains("putative"),
@@ -114,7 +116,7 @@ zoogloea.filt.long.meta <- zoogloea.filt.long %>%
   arrange(record) %>% 
   left_join(., meta.zoogloea, by = c('record'='tip_label')) %>% 
   filter(!genus %in% 'g__Thauera')%>% filter(!name %in% 'total_count') %>% 
-  mutate(name = factor(name, levels = c('putative','pel','zooglan-like')))
+  mutate(name = factor(name, levels = c('putative','pel','zooglan')))
 
 zoogloea.filt.long.meta$record <- gsub('barcode02_Z_caeni','GCA_986281895*', zoogloea.filt.long.meta$record)
 zoogloea.filt.long.meta$record <- gsub('barcode03_Z_oleivorans','GCA_986281795*', zoogloea.filt.long.meta$record)
@@ -134,7 +136,7 @@ p_tile <- ggplot(zoogloea.filt.long.meta) +
     legend.background = element_rect(fill = 'transparent'),
     axis.title = element_blank(),
     axis.text.y = element_text(size=8, angle =0, hjust=1, vjust = 0.5, face='bold', color = 'black'),
-    axis.text.x = element_text(size=6, angle =90, hjust=1, vjust = 0.5), 
+    axis.text.x = element_text(size=7, angle =90, hjust=1, vjust = 0.5, color = 'black'), 
     strip.text.x = element_text(angle=90, hjust=0, face = 'bold', size = 6),
     strip.clip = 'off',
     #strip.text.x = element_text(size=10, face = 'bold'),
@@ -154,9 +156,12 @@ library(gggenes)
 
 
 bigscape <- read_tsv('~/projects/rethink/zoogloea_paper/data/generated/EPS_gene_cluster_search/HQ_genomes/Zoogloea/250402_cluster_gene_clusters/bigscape/250403_bigscape/output_files/2025-04-03_16-17-52_full.network')
+bigscape <- read_tsv('/home/bio.aau.dk/kl42gg/projects/rethink/zoogloea_paper/data/generated/epsSMAH/260724_Zoogloea_epsSMASH/bigscape/260724_bigscape/output_files/2026-07-24_13-18-22_full.network')
 
+gene_clusters1 <- read_tsv('/home/bio.aau.dk/zs85xk/projects/epsSMASH/epsSMASH_analyses/Zooglan_Sofie/gene_info_zoogloea.tsv', col_names = T)
 
-gene_clusters <- read_tsv('/home/bio.aau.dk/zs85xk/projects/epsSMASH/epsSMASH_analyses/Zooglan_Sofie/gene_info_zoogloea.tsv', col_names = T)
+gene_clusters <- read_tsv('/home/bio.aau.dk/kl42gg/projects/rethink/zoogloea_paper/data/generated/epsSMAH/260724_Zoogloea_epsSMASH/epsSMASH_regions_hits.tsv', col_names = T)
+
 gene_functions <- read_tsv('/home/bio.aau.dk/zs85xk/projects/epsSMASH/epsSMASH/epssmash/outputs/html/gene_functions.tsv', 
                            col_names = c('Query','gene_function'))
 
@@ -178,7 +183,8 @@ gene_clusters.put <- gene_clusters %>%
   mutate(across(c(start, stop), as.integer)) 
 
 gene_clusters.put <- gene_clusters.put %>% 
-  mutate(GBK=paste0(genome_id, "__",contig_id,".",region_id))
+  mutate(GBK=paste0(contig_id,".",region_id))
+  # mutate(GBK=paste0(genome_id, "__",contig_id,".",region_id))
 #putative.GBK <- test$GBK %>% unique()
 
 
@@ -191,7 +197,7 @@ gc.put.filt <- gene_clusters.put %>%
 
 # remove stuff from genome names
 gc.put.filt$genome_id <- str_remove_all(gc.put.filt$genome_id , "_(ASM|SRR|TT).*")
-ord <- read_tsv('~/projects/rethink/zoogloea_paper/data/generated/EPS_gene_cluster_search/HQ_genomes/Zoogloea/250402_cluster_gene_clusters/bigscape/250403_bigscape/output_files/2025-04-03_16-17-52_c0.75/mix/mix_clustering_c0.75.tsv')
+ord <- read_tsv('/home/bio.aau.dk/kl42gg/projects/rethink/zoogloea_paper/data/generated/epsSMAH/260724_Zoogloea_epsSMASH/bigscape/260724_bigscape/output_files/2026-07-24_13-18-22_c0.75/mix/mix_clustering_c0.75.tsv')
 gc.put.filt.meta <- gc.put.filt %>% 
   left_join(., gene_functions, by = "Query") %>% 
   left_join(., propnames, by = c('genome_id'='genome')) %>% 
@@ -208,7 +214,7 @@ gc.put.filt.meta$genome_id <- gsub('barcode04_Z_resiniphila','GCA_986340685*',gc
 
 library(glue)
 gc.put.filt.meta <- gc.put.filt.meta %>%
-  mutate(y_label = glue("italic('{proposed_name_new}')*' ({genome_id}::{contig_id}::{str_remove_all(region_id, 'region')})'"))
+  mutate(y_label = glue("italic('{proposed_name_new}')*' ({genome_id}::{GBK})'"))
 
 p_geme <- gc.put.filt.meta %>% mutate(stranded = if_else(strand == '+', 1, 0)) %>% 
   ggplot(., aes(xmin = start, xmax = stop, y = y_label ,
@@ -217,25 +223,27 @@ p_geme <- gc.put.filt.meta %>% mutate(stranded = if_else(strand == '+', 1, 0)) %
                   arrowhead_height = grid::unit(2.5, "mm"),
                   arrow_body_height = grid::unit(2, "mm"),
                   arrowhead_width = grid::unit(1, "mm")) + 
-  geom_text(
-    aes(x=if_else(stop > start,
-                  start+100,
-                  stop +100), 
-        label = Query),
-    #nudge_y = 0.03, 
-    #angle = 5,
-    hjust= 0,
-    size= 1)+
+  # geom_text(
+  #   aes(x=if_else(stop > start,
+  #                 start+100,
+  #                 stop +100), 
+  #       label = Query),
+  #   #nudge_y = 0.03, 
+  #   #angle = 5,
+  #   hjust= 0,
+  #   size= 1)+
   theme_minimal()+
   theme(axis.title = element_blank(),
-        axis.text.y = element_text(size=5),
+        axis.text.y = element_text(size=7, color = 'black'),
         strip.text.y = element_text(angle=0, vjust=0.5, face = 'bold', size = 8)) +
-    facet_grid(rows=vars(Family), scales = 'free', space= 'free' ) +
+    facet_grid(Family~., scales = 'free', space= 'free' ) +
  # scale_fill_viridis_d(option ="F", na.value = 'grey90')+
   scale_fill_manual( "Gene function",
     values = rev(c( "#34978F","#2F5D5B",
-    "#9FB8AD","#A47559","#D9A066","#EAC5AA","#84541E")), na.value = 'grey95')+
+    "#9FB8AD","#A47559","#D9A066","#EAC5AA","#84541E",'hotpink4')), na.value = 'grey95')+
   scale_y_discrete(labels = function(x) parse(text = x))
+
+p_geme
 
 complot <- cowplot::plot_grid(p_tile,
                               p_geme,
@@ -243,11 +251,11 @@ complot <- cowplot::plot_grid(p_tile,
                               labels = 'AUTO',
                               label_fontface = "plain",
                               ncol=1,
-                              rel_heights = c(0.4,1))
+                              rel_heights = c(0.3,1))
 ggsave('/home/bio.aau.dk/kl42gg/projects/rethink/zoogloea_paper/data/plots/supplementary/FigS14_epsSMASH_zoogloea_GCfamily_putative.jpeg',
        complot, dpi = 600,
-       height = 10,
-       width = 11)
+       height = 12,
+       width = 12)
 
 
 
