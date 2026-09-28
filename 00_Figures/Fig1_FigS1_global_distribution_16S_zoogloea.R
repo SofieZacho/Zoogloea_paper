@@ -440,7 +440,7 @@ library(ggh4x)
 plotbiogeo <- ggplot(melted_df_meta,
        aes(x = variable, y = Genus, fill = as.factor(bin))) +
   geom_tile(color = 'white',
-    linewidth = 0.1
+    linewidth = 0.05
     ) +
   
   ggh4x::facet_nested( ~ Continent+country_tl, scales = "free", space = "free", 
@@ -496,12 +496,20 @@ compf <- cowplot::plot_grid(complot1+theme(text = element_text(color = 'black'))
                            nrow = 2, rel_heights = c(1,0.6))
 
 
-
+ggsave('/home/bio.aau.dk/kl42gg/projects/rethink/zoogloea_paper/data/plots/Fig1_global_abundance_all_high_switch.tiff',
+       compf, width = 12.5, height = 8, dpi=1200,
+       compression = "lzw",
+       bg = 'white')
 
 
 ggsave('/home/bio.aau.dk/kl42gg/projects/rethink/zoogloea_paper/data/plots/Fig1_global_abundance_all_high_switch.jpeg',
        compf, width = 12.5, height = 8, dpi=800,
        bg = 'white')
+ggsave('/home/bio.aau.dk/kl42gg/projects/rethink/zoogloea_paper/data/plots/Fig1_global_abundance_all_high_switch.eps',
+       compf, width = 12.5, height = 8,
+       bg = 'white')
+
+
 ggsave('/home/bio.aau.dk/kl42gg/projects/rethink/zoogloea_paper/data/plots/Fig1_global_abundance_all_high_switch.svg',
        compf, width = 12.5, height = 8,
        bg = 'white')

@@ -530,6 +530,12 @@ qspprep<-cowplot::plot_grid(qplot, pgene.spprep, ncol = 1, labels= c('A','B'),
                             align = 'v')
 qspprep
 
+ggsave('/home/bio.aau.dk/kl42gg/projects/rethink/zoogloea_paper/data/plots/Fig4_spprep_tree_genes_others_an.tiff',
+       qspprep, dpi=1200,
+       compression = "lzw",
+       height = 6,
+       width = 12.5)
+
 ggsave('/home/bio.aau.dk/kl42gg/projects/rethink/zoogloea_paper/data/plots/Fig4_spprep_tree_genes_others_an.jpeg',
        qspprep, dpi=600,
        height = 6,

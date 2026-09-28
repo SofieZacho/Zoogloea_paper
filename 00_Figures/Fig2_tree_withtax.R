@@ -99,6 +99,12 @@ s <- p.genomec  +
                      , guide = "none"
                      )
 
+ggsave('/home/bio.aau.dk/kl42gg/projects/rethink/zoogloea_paper/data/plots/Fig2_total_tree_wtax_r226.tiff',
+       s, dpi=1200,
+       compression = "lzw",
+       height = 8,
+       width=15)
+
 ggsave('/home/bio.aau.dk/kl42gg/projects/rethink/zoogloea_paper/data/plots/Fig2_total_tree_wtax_r226.jpeg',
        s, dpi=400,
        height = 8,

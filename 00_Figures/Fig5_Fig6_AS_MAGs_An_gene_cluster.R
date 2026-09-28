@@ -200,6 +200,12 @@ p_gene <- df %>% filter(s > -20000, s < 60000) %>%
         ) 
 
 
+ggsave('/home/bio.aau.dk/kl42gg/projects/rethink/zoogloea_paper/data/plots/Fig6_an_gene_cluster_approved_15000bp_genuslab_with_labels.tiff',
+       p_gene, dpi=1200,
+       compression = "lzw",
+       height = 10,
+       width = 9)
+
 ggsave('/home/bio.aau.dk/kl42gg/projects/rethink/zoogloea_paper/data/plots/Fig6_an_gene_cluster_approved_15000bp_genuslab_with_labels.jpeg',
        p_gene, dpi=600,
        height = 10,
@@ -399,7 +405,9 @@ library(ggsankey)
 taxonomic_cols <- c('class', 'order', 'family', 'genus', 'species')
 df_with_counts <- hits.geo %>%
   mutate(across(all_of(taxonomic_cols), ~ paste0(.x, " (", ave(seq_along(.x), .x, FUN = length))))
-df_with_counts_meta <-meta.approved.hits.geo %>%
+
+# df_with_counts_meta <-meta.approved.hits.geo %>%
+df_with_counts_meta <-meta.approved %>%
   mutate(across(all_of(taxonomic_cols), 
                 list(count = ~ ave(seq_along(.x), .x, FUN = length)))) %>% 
   select(bin,class_count,order_count,family_count,genus_count,species_count)
@@ -531,11 +539,18 @@ plot_5 <- cowplot::ggdraw() +
   )
 
 
+ggsave('/home/bio.aau.dk/kl42gg/projects/rethink/zoogloea_paper/data/plots/Fig5_hits_AS_MAGS_approved_15000bp.tiff',
+       plot_5, dpi=1200,
+       compression = "lzw",
+       height = 8,
+       width = 13)
 
 ggsave('/home/bio.aau.dk/kl42gg/projects/rethink/zoogloea_paper/data/plots/Fig5_hits_AS_MAGS_approved_15000bp.jpeg',
        plot_5, dpi = 800,
        height = 8,
        width = 13)
+
+
 
 
 

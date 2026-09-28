@@ -131,7 +131,12 @@ p_tile <- ggplot(data=tile.subset)+
   ) 
 
 
-  
+ggsave('/home/bio.aau.dk/kl42gg/projects/rethink/zoogloea_paper/data/plots/Fig3_heat_simple_subset_propnames.tiff',
+       p_tile,dpi=1200,
+       compression = "lzw",
+       height = 7.5,
+       width = 9.5)
+
 ggsave('/home/bio.aau.dk/kl42gg/projects/rethink/zoogloea_paper/data/plots/Fig3_heat_simple_subset_propnames.jpeg',
        p_tile,dpi=600,
        height = 7.5,
